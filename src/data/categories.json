@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Feliz",
+    "emoji": "😊",
+    "color": "#FFD166"
+  },
+  {
+    "id": 2,
+    "name": "En paz",
+    "emoji": "🌿",
+    "color": "#C3F0CA"
+  },
+  {
+    "id": 3,
+    "name": "Agradecido",
+    "emoji": "🙏",
+    "color": "#F4A261"
+  },
+  {
+    "id": 4,
+    "name": "Reflexivo",
+    "emoji": "💭",
+    "color": "#BDB2FF"
+  },
+  {
+    "id": 5,
+    "name": "Motivado",
+    "emoji": "🔥",
+    "color": "#EF476F"
+  },
+  {
+    "id": 6,
+    "name": "Triste",
+    "emoji": "😔",
+    "color": "#89A1EF"
+  },
+  {
+    "id": 7,
+    "name": "Ansioso",
+    "emoji": "😰",
+    "color": "#90A955"
+  },
+  {
+    "id": 9,
+    "name": "Cansado",
+    "emoji": "😴",
+    "color": "#CED4DA"
+  },
+  {
+    "id": 10,
+    "name": "Frustrado",
+    "emoji": "😤",
+    "color": "#A4A4A4"
+  },
+  {
+    "id": 11,
+    "name": "Introvertido",
+    "emoji": "🙃",
+    "color": "#C2C2C2"
+  }
+]

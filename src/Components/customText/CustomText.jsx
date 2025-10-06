@@ -1,5 +1,5 @@
 import { Text } from "react-native"
-import { setFontFamily } from "@/utils/fontFamily";
+import { setFontStyle } from "@/utils/fontStyle";
 import { lightTheme } from "../../global/theme";
 
 const CustomText = ({ type, children, style, weight, italic, size, color }) => {
@@ -8,7 +8,7 @@ const CustomText = ({ type, children, style, weight, italic, size, color }) => {
     <Text
       style={[
         {
-          fontFamily: setFontFamily({ font: type === "title" ? "PlayfairDisplay" : "Nunito", weight, italic }),
+          fontFamily: setFontStyle({ font: type === "title" ? "PlayfairDisplay" : "Nunito", weight, italic }),
           fontSize: size,
           color: lightTheme[color] || lightTheme.textPrimary
         },

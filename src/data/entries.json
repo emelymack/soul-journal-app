@@ -1,0 +1,38 @@
+{
+  "notas": [
+    {
+      "id": 1,
+      "date": "2025-10-05T08:45:00-03:00",
+      "text": "Hoy me levanté con mucha energía. Salí a correr temprano y disfruté el aire fresco. Me sentí realmente viva y en conexión conmigo misma.",
+      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "location": "Buenos Aires, Argentina",
+      "category": "Feliz"
+    },
+    {
+      "id": 2,
+      "date": "2025-10-04T22:10:00-03:00",
+      "text": "Tuve una charla muy profunda con una amiga. Me hizo pensar mucho sobre mis prioridades y sobre cómo quiero vivir los próximos meses.",
+      "category": "Reflexivo"
+    },
+    {
+      "id": 3,
+      "date": "2025-10-03T19:30:00-03:00",
+      "text": "Hoy me sentí un poco abrumada con el trabajo. A veces tengo la sensación de que no llego a todo, pero trato de recordarme que está bien descansar.",
+      "category": "Ansioso"
+    },
+    {
+      "id": 4,
+      "date": "2025-10-02T19:00:00-03:00",
+      "text": "Hoy presencié un atardecer increíble durante mi meditación de la tarde. Los colores eran hipnóticos: naranjas profundos mezclándose con rosados y violetas suaves.\n\nEstuve sentada junto al lago unos 30 minutos, simplemente respirando y estando presente. El agua estaba tan quieta que reflejaba el cielo como un espejo.\n\nEsta experiencia me recordó por qué empecé este camino de *mindfulness*. En momentos así, todo el estrés y las preocupaciones se disuelven. Me sentí conectada con la naturaleza y conmigo misma.\n\n**Estoy agradecida por:**\n\n- El entorno tranquilo junto al lago\n- Tener tiempo para detenerme y reflexionar\n- La belleza que nos rodea cada día\n- Esta práctica que me ancla\n\n*Mañana quiero intentar levantarme temprano para una meditación al amanecer.*",
+      "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+      "location": "Lago Gutiérrez, Bariloche",
+      "category": "Agradecido"
+    },
+    {
+      "id": 5,
+      "date": "2025-10-01T21:15:00-03:00",
+      "text": "Hoy dediqué un rato a reconectarme con mis metas. Me di cuenta de que, aunque a veces me distraigo, sigo avanzando poco a poco.\n\n**Mis focos principales del mes:**\n\n- Mantener mi rutina de journaling diaria\n- Cuidar mi descanso y mis horarios\n- Avanzar en el proyecto personal sin presionarme\n\nTambién me prometí celebrar los pequeños logros, incluso los días en que no todo sale perfecto. *La constancia vale más que la velocidad.*",
+      "category": "Motivado"
+    }
+  ]
+}

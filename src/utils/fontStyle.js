@@ -1,4 +1,4 @@
-export const setFontFamily = ({ font, weight, italic }) => {
+export const setFontStyle = ({ font, weight, italic }) => {
   const fontWeight = font;
 
   if (weight === "bold") {
