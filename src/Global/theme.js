@@ -6,6 +6,8 @@ export const lightTheme = {
   accent: "#FFD700",            // Accent
   textPrimary: "#3E2C5D",       // Primary text
   textSecondary: "#6D4C41",     // Secondary text
+  card: "#F8F7FB",
+  border: "rgba(62, 44, 93, 0.1)"
 };
 
 export const darkTheme = {
@@ -16,4 +18,6 @@ export const darkTheme = {
   accent: "#B39DDB",            // Accent
   textPrimary: "#E8EAF6",       // Primary text
   textSecondary: "#9FA8DA",     // Secondary text
+  // card: "#F8F7FB",
+  border: "rgba(232, 234, 246, 0.1)"
 };
