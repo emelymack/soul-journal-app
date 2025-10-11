@@ -19,9 +19,10 @@ import MainNavigator from "./src/navigation/MainNavigator";
 export default function App() {
   return (
     <RootLayout>
-      <Provider store={soulJournalStore}>
-        <View style={styles.container}>
-          {/* <View style={styles.container}>
+      
+          <Provider store={soulJournalStore}>
+            <View style={styles.container}>
+              {/* <View style={styles.container}>
         <Header title={"Journal Entries"} />
         <Pressable
           onPress={() => alert("Button Pressed!")}
@@ -32,10 +33,10 @@ export default function App() {
         </Pressable>
         <JournalListScreen />
       </View> */}
-          <MainNavigator />
-        </View>
-        <StatusBar style="light" />
-      </Provider>
+              <MainNavigator />
+            </View>
+            <StatusBar style="dark" />
+          </Provider>
     </RootLayout>
   );
 }
@@ -47,16 +48,5 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  button: {
-    width: "95%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 12,
-    marginVertical: 10,
-    borderRadius: 8,
-    backgroundColor: lightTheme.accent,
-    elevation: 4,
-  },
+  }
 });

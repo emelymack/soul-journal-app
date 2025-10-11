@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
 const RootLayout = ({ children }) => {
   const [loaded, error] = useFonts({
@@ -27,7 +28,11 @@ const RootLayout = ({ children }) => {
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>
+    </SafeAreaProvider>
+  );
 };
 
 export default RootLayout;

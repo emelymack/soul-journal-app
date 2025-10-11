@@ -8,9 +8,9 @@ export default function AuthStackNavigator() {
   return (
     <Stack.Navigator
       initialRouteName="Login"
-      // screenOptions={{
-      //   headerShown: false
-      // }}
+      screenOptions={{
+        headerShown: false
+      }}
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
