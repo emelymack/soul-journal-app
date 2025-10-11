@@ -35,7 +35,7 @@ export default function App() {
       </View> */}
               <MainNavigator />
             </View>
-            <StatusBar style="dark" />
+            <StatusBar style="dark" animated={true} />
           </Provider>
     </RootLayout>
   );

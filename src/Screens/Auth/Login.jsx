@@ -6,10 +6,10 @@ import {
 import FlatCard from "../../components/FlatCard";
 import { lightTheme } from "../../global/theme";
 import CustomText from "../../components/customText/CustomText";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useState } from "react";
 import ButtonPrimary from "../../components/ButtonPrimary";
-import CustomInput from "../../components/CustomInput";
+import InputForm from "../../components/InputForm";
+import Logo from "../../components/Logo";
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
@@ -18,13 +18,7 @@ const Login = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <FlatCard style={styles.card}>
-        <View style={styles.logoContainer}>
-          <MaterialCommunityIcons
-            name="flower-outline"
-            size={30}
-            color={lightTheme.textPrimary}
-          />
-        </View>
+        <Logo />
         <CustomText type={"title"} size={18}>
           Welcome Back
         </CustomText>
@@ -32,7 +26,7 @@ const Login = ({ navigation, route }) => {
           Sign in to continue your mindful journey
         </CustomText>
 
-        <CustomInput
+        <InputForm
           name="Email"
           onChange={(text) => setEmail(text)}
           value={email}
@@ -40,12 +34,12 @@ const Login = ({ navigation, route }) => {
           keyboardType="email-address"
         />
 
-        <CustomInput 
+        <InputForm 
           name="Password"
           onChange={(text) => setPassword(text)}
           value={password}
           placeholder={"Enter your password"}
-          secureTextEntry={true}
+          isSecure={true}
         />
 
         <ButtonPrimary
@@ -87,16 +81,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 25,
     paddingVertical: 30,
-  },
-  logoContainer: {
-    backgroundColor: lightTheme.primary,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: "50%",
-    width: 70,
   },
   footerContainer: {
     display: "flex",

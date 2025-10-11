@@ -5,13 +5,13 @@ import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { lightTheme } from "../global/theme";
 
-const CustomInput = ({
+const InputForm = ({
   name,
   onChange,
   value,
   placeholder,
   keyboardType,
-  secureTextEntry,
+  isSecure,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
@@ -26,9 +26,9 @@ const CustomInput = ({
           value={value}
           placeholder={placeholder}
           keyboardType={keyboardType || "text"}
-          secureTextEntry={secureTextEntry ? !isPasswordVisible : false}
+          secureTextEntry={isSecure ? !isPasswordVisible : false}
         />
-        {secureTextEntry && (
+        {isSecure && (
           <TouchableOpacity
             onPress={togglePasswordVisibility}
             style={styles.passwordEye}
@@ -45,7 +45,7 @@ const CustomInput = ({
   );
 };
 
-export default CustomInput;
+export default InputForm;
 
 const styles = StyleSheet.create({
   container: {
