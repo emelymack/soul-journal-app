@@ -35,7 +35,7 @@ const JournalListCard = ({ date, text, image, location }) => {
       </View>
       <Pressable>
         <CustomText size={12}>
-          {text.length > 250 ? `${text.substring(0, 250)}...` : text}
+          {text?.length > 250 ? `${text?.substring(0, 250)}...` : text}
         </CustomText>
       </Pressable>
     </View>
