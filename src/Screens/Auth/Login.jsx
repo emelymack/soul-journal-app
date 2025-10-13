@@ -1,19 +1,43 @@
-import {
-  Pressable,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import FlatCard from "../../components/FlatCard";
 import { lightTheme } from "../../global/theme";
 import CustomText from "../../components/customText/CustomText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import InputForm from "../../components/InputForm";
 import Logo from "../../components/Logo";
+import { useLoginMutation } from "../../services/authApi";
+import { useDispatch } from "react-redux";
+import { setUserEmail } from "../../store/slices/authSlice";
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [triggerLogin, result] = useLoginMutation();
+  const dispatch = useDispatch();
+
+  const onSubmit = () => {
+    triggerLogin({ email, password });
+
+    if (!result.isSuccess) {
+      Alert.alert("Oops...", "Invalid email or password.\nPlease, try again.", [
+        { text: "Ok", onPress: () => console.log("OK Pressed") },
+      ]);
+    }
+
+    console.log(result);
+  };
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      try {
+        dispatch(setUserEmail(email));
+      } catch (error) {
+        console.error("Error logging in:", error);
+      }
+    }
+  }, [result]);
 
   return (
     <View style={styles.container}>
@@ -34,7 +58,7 @@ const Login = ({ navigation, route }) => {
           keyboardType="email-address"
         />
 
-        <InputForm 
+        <InputForm
           name="Password"
           onChange={(text) => setPassword(text)}
           value={password}
@@ -43,6 +67,7 @@ const Login = ({ navigation, route }) => {
         />
 
         <ButtonPrimary
+          onPress={onSubmit}
           style={{ width: "100%", marginTop: 15 }}
           backgroundColor={lightTheme.primary}
         >
@@ -50,7 +75,7 @@ const Login = ({ navigation, route }) => {
         </ButtonPrimary>
 
         <View style={styles.footerContainer}>
-          <CustomText size={12} style={{ marginRight: 3}}>
+          <CustomText size={12} style={{ marginRight: 3 }}>
             Don't have an account?
           </CustomText>
           <Pressable onPress={() => navigation.navigate("SignUp")}>
@@ -86,6 +111,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 12
+    marginTop: 12,
   },
 });

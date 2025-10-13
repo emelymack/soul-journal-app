@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet } from "react-native";
 import { lightTheme } from "../global/theme";
 
-const ButtonPrimary = ({ children, backgroundColor, style }) => {
+const ButtonPrimary = ({ children, backgroundColor, style, onPress }) => {
   return (
     <Pressable 
-      onPress={() => alert("Button Pressed!")} 
+      onPress={onPress} 
       style={[
         styles.button,
         {backgroundColor: backgroundColor || lightTheme.accent},

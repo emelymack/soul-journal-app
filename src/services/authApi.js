@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const authBaseUrl = process.env.EXPO_PUBLIC_BASE_URL_AUTH;
 const apiKey = process.env.EXPO_PUBLIC_FIREBASE_API_KEY;
