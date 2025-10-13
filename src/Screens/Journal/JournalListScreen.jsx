@@ -1,8 +1,10 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import entries from "../../data/entries.json";
 import { useState } from "react";
 import CustomText from "../../components/customText/CustomText";
 import JournalListCard from "../../components/journal/JournalListCard";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import ButtonPrimary from "../../components/ButtonPrimary";
 
 const JournalListScreen = () => {
   const [journalEntries, setJournalEntries] = useState(entries || []);
@@ -10,23 +12,33 @@ const JournalListScreen = () => {
   // console.log(journalEntries);
 
   return (
-    <FlatList
-      data={journalEntries}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <JournalListCard
-          text={item.text}
-          date={item.date}
-          image={item.image}
-          location={item.location}
-        />
-      )}
-      ListEmptyComponent={() => (
-        <CustomText size={15} style={{ marginTop: 30 }}>
-          No journal entries found...
-        </CustomText>
-      )}
-    />
+    <View>
+      <ButtonPrimary 
+        onPress={() => alert("Button Pressed!")} 
+        width={"95%"}
+      >
+        <AntDesign name="plus" size={14} style={{ marginRight: 6 }} 
+      />
+        <CustomText size={14}>New Entry</CustomText>
+      </ButtonPrimary>
+      <FlatList
+        data={journalEntries}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <JournalListCard
+            text={item.text}
+            date={item.date}
+            image={item.image}
+            location={item.location}
+          />
+        )}
+        ListEmptyComponent={() => (
+          <CustomText size={15} style={{ marginTop: 30 }}>
+            No journal entries found...
+          </CustomText>
+        )}
+      />
+    </View>
   );
 };
 

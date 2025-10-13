@@ -1,25 +1,37 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { lightTheme } from "../global/theme";
 
-const ButtonPrimary = ({ children, backgroundColor, style, onPress }) => {
+const ButtonPrimary = ({ children, backgroundColor, style, onPress, width }) => {
   return (
+    <View style={styles.container}>
     <Pressable 
       onPress={onPress} 
       style={[
         styles.button,
-        {backgroundColor: backgroundColor || lightTheme.accent},
+        {
+          backgroundColor: backgroundColor || lightTheme.accent,
+          width: width || '100%'
+        },
         style
       ]}
     >
       {children}
     </Pressable>
+    </View>
   );
 };
 
 export default ButtonPrimary;
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   button: {
+    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
