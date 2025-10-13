@@ -12,6 +12,7 @@ const InputForm = ({
   placeholder,
   keyboardType,
   isSecure,
+  error
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
@@ -39,6 +40,14 @@ const InputForm = ({
               <Feather name="eye" size={18} color="black" />
             )}
           </TouchableOpacity>
+        )}
+        {error && (
+          <CustomText 
+            color={"error"}
+            size={10}
+          >
+            {error}
+          </CustomText>
         )}
       </View>
     </View>

@@ -8,34 +8,55 @@ import InputForm from "../../components/InputForm";
 import Logo from "../../components/Logo";
 import { useLoginMutation } from "../../services/authApi";
 import { useDispatch } from "react-redux";
-import { setUserEmail } from "../../store/slices/authSlice";
+import { setIdToken, setUserEmail } from "../../store/slices/authSlice";
+import { loginSchema } from "../../validations/loginSchema";
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [ errorEmail, setErrorEmail ] = useState(null);
+  const [ errorPassword, setErrorPassword ] = useState(null);
 
   const [triggerLogin, result] = useLoginMutation();
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    triggerLogin({ email, password });
+    setErrorEmail(null);
+    setErrorPassword(null);
+    
+    try {
+      loginSchema.validateSync({email, password})
 
-    if (!result.isSuccess) {
-      Alert.alert("Oops...", "Invalid email or password.\nPlease, try again.", [
-        { text: "Ok", onPress: () => console.log("OK Pressed") },
-      ]);
+      triggerLogin({ email, password });
+    } catch (error) {
+      switch(error.path) {
+        case "email":
+          setErrorEmail(error.message)
+          break;
+        case "password":
+          setErrorPassword(error.message)
+          break;
+        default:
+          break;
+      }
     }
-
-    console.log(result);
   };
 
   useEffect(() => {
+    // console.log(result);
+
     if (result.isSuccess) {
       try {
         dispatch(setUserEmail(email));
+        dispatch(setIdToken(result.data.idToken))
       } catch (error) {
         console.error("Error logging in:", error);
       }
+    } 
+    if(result.isError) {
+      Alert.alert("Oops...", "Invalid email or password.\nPlease, try again.", [
+        { text: "Ok" },
+      ]);
     }
   }, [result]);
 
@@ -56,6 +77,7 @@ const Login = ({ navigation, route }) => {
           value={email}
           placeholder="Enter your email"
           keyboardType="email-address"
+          error={errorEmail}
         />
 
         <InputForm
@@ -64,6 +86,7 @@ const Login = ({ navigation, route }) => {
           value={password}
           placeholder={"Enter your password"}
           isSecure={true}
+          error={errorPassword}
         />
 
         <ButtonPrimary
