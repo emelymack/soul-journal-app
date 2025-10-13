@@ -14,27 +14,29 @@ import { loginSchema } from "../../validations/loginSchema";
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [ errorEmail, setErrorEmail ] = useState(null);
-  const [ errorPassword, setErrorPassword ] = useState(null);
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorPassword, setErrorPassword] = useState(null);
 
   const [triggerLogin, result] = useLoginMutation();
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
+  const onSubmit = () => {    
     setErrorEmail(null);
     setErrorPassword(null);
-    
+
     try {
-      loginSchema.validateSync({email, password})
+      loginSchema.validateSync({ email, password });
 
       triggerLogin({ email, password });
     } catch (error) {
-      switch(error.path) {
+      console.log(error);
+      
+      switch (error.path) {
         case "email":
-          setErrorEmail(error.message)
+          setErrorEmail(error.message);
           break;
         case "password":
-          setErrorPassword(error.message)
+          setErrorPassword(error.message);
           break;
         default:
           break;
@@ -48,13 +50,13 @@ const Login = ({ navigation, route }) => {
     if (result.isSuccess) {
       try {
         dispatch(setUserEmail(email));
-        dispatch(setIdToken(result.data.idToken))
+        dispatch(setIdToken(result.data.idToken));
       } catch (error) {
         console.error("Error logging in:", error);
       }
-    } 
-    if(result.isError) {
-      Alert.alert("Oops...", "Invalid email or password.\nPlease, try again.", [
+    }
+    if (result.isError) {
+      Alert.alert("❌ Oops...", "Invalid email or password.\nPlease, try again.", [
         { text: "Ok" },
       ]);
     }

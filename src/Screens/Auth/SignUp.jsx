@@ -1,17 +1,84 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { lightTheme } from "../../global/theme";
 import FlatCard from "../../components/FlatCard";
 import CustomText from "../../components/customText/CustomText";
 import Logo from "../../components/Logo";
 import InputForm from "../../components/InputForm";
 import ButtonPrimary from "../../components/ButtonPrimary";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSignUpMutation } from "../../services/authApi";
+import { signUpSchema } from "../../validations/signUpSchema";
 
 const SignUp = ({ navigation, route }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  const [errorFullName, setErrorFullName] = useState(null);
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorPassword, setErrorPassword] = useState(null);
+  const [errorPasswordConfirmation, setErrorPasswordConfirmation] =
+    useState(null);
+
+  const [triggerSignUp, result] = useSignUpMutation();
+
+  const onSubmit = () => {
+    setErrorFullName(null);
+    setErrorEmail(null);
+    setErrorPassword(null);
+    setErrorPasswordConfirmation(null);
+
+    try {
+      signUpSchema.validateSync({
+        fullName,
+        email,
+        password,
+        passwordConfirmation,
+      });
+
+      triggerSignUp({ fullName, email, password, passwordConfirmation });
+    } catch (error) {
+      switch (error.path) {
+        case "fullName":
+          setErrorFullName(error.message);
+          break;
+        case "email":
+          setErrorEmail(error.message);
+          break;
+        case "password":
+          setErrorPassword(error.message);
+          break;
+        case "passwordConfirmation":
+          setErrorPasswordConfirmation(error.message);
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      try {
+        Alert.alert(
+          "🎉 Woohoo!",
+          "Registration successful! 💜\nNow you may login.",
+          [{ text: "Ok" }]
+        );
+        navigation.navigate("Login");
+      } catch (error) {
+        console.error("Error logging in:", error);
+      }
+    }
+    if (result.isError) {
+      Alert.alert(
+        "❌ Oops...",
+        "There has been an error during your registration.\nPlease, try again.",
+        [{ text: "Ok" }]
+      );
+    }
+  }, [result]);
 
   return (
     <View style={styles.container}>
@@ -29,6 +96,7 @@ const SignUp = ({ navigation, route }) => {
           onChange={(text) => setFullName(text)}
           value={fullName}
           placeholder="Enter your name"
+          error={errorFullName}
         />
 
         <InputForm
@@ -37,6 +105,7 @@ const SignUp = ({ navigation, route }) => {
           value={email}
           placeholder="Enter your email"
           keyboardType="email-address"
+          error={errorEmail}
         />
 
         <InputForm
@@ -45,6 +114,7 @@ const SignUp = ({ navigation, route }) => {
           value={password}
           placeholder={"Enter your password"}
           isSecure={true}
+          error={errorPassword}
         />
 
         <InputForm
@@ -53,9 +123,11 @@ const SignUp = ({ navigation, route }) => {
           value={passwordConfirmation}
           placeholder={"Confirm your password"}
           isSecure={true}
+          error={errorPasswordConfirmation}
         />
 
         <ButtonPrimary
+          onPress={onSubmit}
           style={{ width: "100%", marginTop: 15 }}
           backgroundColor={lightTheme.primary}
         >

@@ -1,4 +1,4 @@
-import { object, string } from "yup";
+import { object, ref, string } from "yup";
 
 export const signUpSchema = object().shape({
   fullName: string()
