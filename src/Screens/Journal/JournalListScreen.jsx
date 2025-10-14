@@ -1,25 +1,43 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import entries from "../../data/entries.json";
-import { useState } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+} from "react-native";
 import CustomText from "../../components/customText/CustomText";
 import JournalListCard from "../../components/journal/JournalListCard";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import ButtonPrimary from "../../components/ButtonPrimary";
+import { useSelector } from "react-redux";
+import { useGetEntriesQuery } from "../../services/journalApi";
+import Loader from "../../components/Loader";
 
 const JournalListScreen = () => {
-  const [journalEntries, setJournalEntries] = useState(entries || []);
+  const userId = useSelector((state) => state.authReducer.user?.userId);
 
-  // console.log(journalEntries);
+  const {
+    data: journalEntries,
+    isLoading,
+    isError,
+    error,
+  } = useGetEntriesQuery(userId);
+
+  if (isLoading) {
+    return <Loader />
+  }
+
+  if (isError) {
+    return <CustomText>Error: {error.message}</CustomText>;
+  }
+
+  console.log(journalEntries);
 
   return (
     <View>
-      <ButtonPrimary 
-        onPress={() => alert("Button Pressed!")} 
-        width={"95%"}
-      >
-        <AntDesign name="plus" size={14} style={{ marginRight: 6 }} 
-      />
-        <CustomText size={14} weight={'bold'}>New Entry</CustomText>
+      <ButtonPrimary onPress={() => alert("Button Pressed!")} width={"95%"}>
+        <AntDesign name="plus" size={14} style={{ marginRight: 6 }} />
+        <CustomText size={14} weight={"bold"}>
+          New Entry
+        </CustomText>
       </ButtonPrimary>
       <FlatList
         data={journalEntries}
