@@ -5,6 +5,8 @@ const dbBaseUrl = process.env.EXPO_PUBLIC_BASE_URL_RTDB
 export const journalApi = createApi({
   reducerPath: "journalApi",
   baseQuery: fetchBaseQuery({baseUrl: dbBaseUrl}),
+  tagTypes: ['Entries'],
+
   endpoints: (builder) => ({
     getEntries: builder.query({
       query: (userId) => `entries/${userId}.json`,
@@ -15,11 +17,31 @@ export const journalApi = createApi({
           ...response[key]
         })).sort((a, b) => new Date(b.date) - new Date(a.date));
         return entriesArray;
-      }
+      },
+      providesTags: ['Entries']
+    }),
+
+    addEntry: builder.mutation({
+      query: ({userId, entryData}) => ({
+        url: `entries/${userId}.json`,
+        method: 'POST',
+        body: entryData
+      }),
+      invalidatesTags: ['Entries']
+    }),
+
+    deleteEntry: builder.mutation({
+      query: ({userId, entryId}) => ({
+        url: `entries/${userId}/${entryId}.json`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Entries']
     })
   })
 })
 
 export const {
-  useGetEntriesQuery
+  useGetEntriesQuery,
+  useAddEntryMutation,
+  useDeleteEntryMutation
 } = journalApi;

@@ -6,7 +6,7 @@ import { journalApi } from "../services/journalApi";
 
 export const soulJournalStore = configureStore({
   reducer: {
-    authReducer,
+    auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [journalApi.reducerPath]: journalApi.reducer
   },

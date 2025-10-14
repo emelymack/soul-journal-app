@@ -12,7 +12,7 @@ import { useGetEntriesQuery } from "../../services/journalApi";
 import Loader from "../../components/Loader";
 
 const JournalListScreen = () => {
-  const userId = useSelector((state) => state.authReducer.user?.userId);
+  const userId = useSelector((state) => state.auth.user?.userId);
 
   const {
     data: journalEntries,
