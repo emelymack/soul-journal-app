@@ -4,11 +4,11 @@ import AuthStackNavigator from "./AuthStackNavigator";
 import JournalStackNavigator from "./JournalStackNavigator";
 
 export default function MainNavigator() {
-  const user = useSelector((state) => state.authReducer.user);
+  const token = useSelector((state) => state.authReducer.token);
 
   return (
     <NavigationContainer>
-      { user ? <JournalStackNavigator /> : <AuthStackNavigator /> }
+      { token ? <JournalStackNavigator /> : <AuthStackNavigator /> }
     </NavigationContainer>
   )
 }

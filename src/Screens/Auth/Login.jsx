@@ -8,8 +8,8 @@ import InputForm from "../../components/InputForm";
 import Logo from "../../components/Logo";
 import { useLoginMutation } from "../../services/authApi";
 import { useDispatch } from "react-redux";
-import { setIdToken, setUserEmail } from "../../store/slices/authSlice";
 import { loginSchema } from "../../validations/loginSchema";
+import { setUser } from "../../store/slices/authSlice";
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
@@ -17,10 +17,10 @@ const Login = ({ navigation, route }) => {
   const [errorEmail, setErrorEmail] = useState(null);
   const [errorPassword, setErrorPassword] = useState(null);
 
-  const [triggerLogin, result] = useLoginMutation();
+  const [triggerLogin, { data, isSuccess, isError }] = useLoginMutation();
   const dispatch = useDispatch();
 
-  const onSubmit = () => {    
+  const handleLogin = () => {
     setErrorEmail(null);
     setErrorPassword(null);
 
@@ -29,8 +29,6 @@ const Login = ({ navigation, route }) => {
 
       triggerLogin({ email, password });
     } catch (error) {
-      console.log(error);
-      
       switch (error.path) {
         case "email":
           setErrorEmail(error.message);
@@ -45,22 +43,22 @@ const Login = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    // console.log(result);
-
-    if (result.isSuccess) {
+    if (isSuccess) {
       try {
-        dispatch(setUserEmail(email));
-        dispatch(setIdToken(result.data.idToken));
+        dispatch(setUser(data));
+        console.log("login sucesful");
       } catch (error) {
         console.error("Error logging in:", error);
       }
     }
-    if (result.isError) {
-      Alert.alert("❌ Oops...", "Invalid email or password.\nPlease, try again.", [
-        { text: "Ok" },
-      ]);
+    if (isError) {
+      Alert.alert(
+        "❌ Oops...",
+        "Invalid email or password.\nPlease, try again.",
+        [{ text: "Ok" }]
+      );
     }
-  }, [result]);
+  }, [data, isSuccess, isError]);
 
   return (
     <View style={styles.container}>
@@ -92,7 +90,7 @@ const Login = ({ navigation, route }) => {
         />
 
         <ButtonPrimary
-          onPress={onSubmit}
+          onPress={handleLogin}
           style={{ width: "100%", marginTop: 15 }}
           backgroundColor={lightTheme.primary}
         >
