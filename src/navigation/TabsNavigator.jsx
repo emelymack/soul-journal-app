@@ -41,7 +41,7 @@ const TabsNavigator = () => {
       <Tab.Screen
         name="New Entry"
         component={JournalStackNavigator}
-        initialParams={{ screen: "Create New Entry" }}
+        initialParams={{ screen: "New Journal Entry" }}
         options={{
           tabBarIcon: ({ focused }) => (
             <>
@@ -65,13 +65,13 @@ export default TabsNavigator;
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 65,
+    height: 75,
     paddingTop: 10,
   },
   iconContainer: {
     backgroundColor: lightTheme.primary,
     position: "absolute",
-    width: "70",
+    width: 70,
     height: 60,
     top: -7,
     borderRadius: 10,

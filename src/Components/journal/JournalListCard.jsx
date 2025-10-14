@@ -1,11 +1,11 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Platform,  StyleSheet, View } from "react-native";
 import CustomText from "../customText/CustomText";
 import { lightTheme } from "../../global/theme";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { format } from "date-fns";
 
-const JournalListCard = ({ date, text, image, location }) => {
+const JournalListCard = ({ date, title, text, image, location }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,11 +33,12 @@ const JournalListCard = ({ date, text, image, location }) => {
           )}
         </View>
       </View>
-      <Pressable>
+      <CustomText type={'title'} size={15} style={{marginBottom: 4}}>
+          {title}
+        </CustomText>
         <CustomText size={12}>
           {text?.length > 250 ? `${text?.substring(0, 250)}...` : text}
         </CustomText>
-      </Pressable>
     </View>
   );
 };
@@ -47,12 +48,24 @@ export default JournalListCard;
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    border: `1px solid ${lightTheme.border}`,
     borderRadius: 8,
-    boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
     padding: 16,
     marginVertical: 8,
     marginHorizontal: 12,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: lightTheme.border,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 3,
+      }
+    })
   },
   header: {
     display: "flex",

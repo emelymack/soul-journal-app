@@ -7,7 +7,7 @@ const Loader = () => {
       <ActivityIndicator 
         size="large" 
         color={lightTheme.primary} 
-      />;
+      />
     </View>
   )
 }
