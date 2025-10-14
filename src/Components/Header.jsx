@@ -18,7 +18,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: 140,
+    height: 120,
     width: "100%",
     padding: 30,
     backgroundColor: lightTheme.backgroundSecondary,

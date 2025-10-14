@@ -8,7 +8,8 @@ export const lightTheme = {
   textSecondary: "#6D4C41",     // Secondary text
   card: "#F8F7FB",
   border: "rgba(62, 44, 93, 0.1)",
-  error: "#ff3333"
+  error: "#ff3333",
+  inactive: "#D3D3D3"
 };
 
 export const darkTheme = {
@@ -21,5 +22,6 @@ export const darkTheme = {
   textSecondary: "#9FA8DA",     // Secondary text
   // card: "#F8F7FB",
   border: "rgba(232, 234, 246, 0.1)",
-  error: "#ff3333"
+  error: "#ff3333",
+  inactive: "#D3D3D3"
 };
