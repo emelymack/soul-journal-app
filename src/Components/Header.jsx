@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { lightTheme } from "../global/theme";
 import CustomText from "./customText/CustomText";
+import LogoutBtn from "./LogoutBtn";
 
 const Header = ({ title }) => {
   return (
@@ -8,6 +9,7 @@ const Header = ({ title }) => {
       <CustomText type="title" weight="bold" size={24}>
         {title}
       </CustomText>
+      <LogoutBtn />
     </View>
   );
 };

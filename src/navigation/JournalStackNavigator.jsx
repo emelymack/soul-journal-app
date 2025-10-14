@@ -9,12 +9,12 @@ const Stack = createNativeStackNavigator();
 export default function JournalStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="Journal Entries"
+      initialRouteName="My Journal Entries"
       screenOptions={{
         header: ({route}) => <Header title={route.name} />
       }}
     >
-      <Stack.Screen name="Journal Entries" component={JournalListScreen} />
+      <Stack.Screen name="My Journal Entries" component={JournalListScreen} />
       <Stack.Screen name="Journal Entry" component={EntryScreen} />
       <Stack.Screen name="Create New Entry" component={NewEntryScreen} />
     </Stack.Navigator>

@@ -46,7 +46,6 @@ const Login = ({ navigation, route }) => {
     if (isSuccess) {
       try {
         dispatch(setUser(data));
-        console.log("login sucesful");
       } catch (error) {
         console.error("Error logging in:", error);
       }

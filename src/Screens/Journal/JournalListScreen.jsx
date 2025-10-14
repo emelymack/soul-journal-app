@@ -19,7 +19,7 @@ const JournalListScreen = () => {
       >
         <AntDesign name="plus" size={14} style={{ marginRight: 6 }} 
       />
-        <CustomText size={14}>New Entry</CustomText>
+        <CustomText size={14} weight={'bold'}>New Entry</CustomText>
       </ButtonPrimary>
       <FlatList
         data={journalEntries}
