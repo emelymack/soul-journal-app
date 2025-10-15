@@ -25,13 +25,21 @@ export default function JournalStackNavigator() {
         options={({route}) => ({
           header: () => <JournalEntryHeader 
             title={route.params?.entryTitle || route.name} 
-            date={route.params?.entryDate || null} 
+            date={route.params?.entryDate || null}
+            dateFormat={"MMMM d, yyyy"}
           />
         })}
       />
       <Stack.Screen 
         name="New Journal Entry" 
         component={NewEntryScreen}
+        options={() => ({
+          header: () => <JournalEntryHeader 
+            title="New Journal Entry" 
+            date={new Date()}
+            dateFormat={"eeee, MMMM d, yyyy"}
+          />
+        })}
       />
     </Stack.Navigator>
   );

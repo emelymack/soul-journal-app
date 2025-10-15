@@ -5,7 +5,7 @@ import CustomText from "../customText/CustomText";
 import { format } from "date-fns";
 import { lightTheme } from "../../global/theme";
 
-const JournalEntryHeader = ({ title, date }) => {
+const JournalEntryHeader = ({ title, date, dateFormat }) => {
   return (
     <View>
       <Header title={title} backBtn={true} style={styles.container}>
@@ -20,7 +20,7 @@ const JournalEntryHeader = ({ title, date }) => {
               const formatDate = date.toDate()
               {date.format(formatDate, 'MMM d, yyyy')} 
             */}
-            {format(date, "MMMM d, yyyy")}
+            {format(date, dateFormat)}
           </CustomText>
         </View>
       </Header>
