@@ -4,7 +4,11 @@ import JournalListCard from "../../components/journal/JournalListCard";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import { useSelector } from "react-redux";
-import { useGetEntriesQuery } from "../../services/journalApi";
+import {
+  selectEnrichedEntries,
+  useGetCategoriesQuery,
+  useGetEntriesQuery,
+} from "../../services/journalApi";
 import Loader from "../../components/Loader";
 import { lightTheme } from "../../global/theme";
 
@@ -12,24 +16,34 @@ const JournalListScreen = ({ navigation }) => {
   const userId = useSelector((state) => state.auth.user?.userId);
 
   const {
-    data: journalEntries,
-    isLoading,
-    isError,
-    error,
+    isLoading: isLoadingEntries,
+    error: entriesError,
   } = useGetEntriesQuery(userId);
 
-  if (isLoading || !journalEntries) {
+  const {
+    // data: categories,
+    isLoading: isLoadingCategories,
+    error: categoriesError,
+  } = useGetCategoriesQuery();
+
+  const enrichedEntries = useSelector(selectEnrichedEntries(userId));
+
+  if (isLoadingEntries || isLoadingCategories) {
     return <Loader />;
   }
 
-  if (isError) {
+  if (entriesError || categoriesError) {
     return <CustomText>Error: {error.message}</CustomText>;
   }
 
   const renderEntryItem = ({ item }) => (
     <Pressable
       onPress={() =>
-        navigation.navigate("Journal Entry", { entryId: item.id, entryTitle: item.title, entryDate: item.date })
+        navigation.navigate("Journal Entry", {
+          entryId: item.id,
+          entryTitle: item.title,
+          entryDate: item.date
+        })
       }
     >
       <JournalListCard
@@ -38,6 +52,7 @@ const JournalListScreen = ({ navigation }) => {
         date={item.date}
         image={item.image}
         location={item.location}
+        category={item.category}
       />
     </Pressable>
   );
@@ -61,7 +76,7 @@ const JournalListScreen = ({ navigation }) => {
         </View>
       </ButtonPrimary>
       <FlatList
-        data={journalEntries}
+        data={enrichedEntries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderEntryItem}
         ListEmptyComponent={() => (

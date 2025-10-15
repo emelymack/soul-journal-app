@@ -1,11 +1,11 @@
-import { Platform,  StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import CustomText from "../customText/CustomText";
 import { lightTheme } from "../../global/theme";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { format } from "date-fns";
 
-const JournalListCard = ({ date, title, text, image, location }) => {
+const JournalListCard = ({ date, title, text, image, location, category }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -28,17 +28,26 @@ const JournalListCard = ({ date, title, text, image, location }) => {
             <Feather name="camera" size={14} color={lightTheme.textSecondary} />
           )}
           {location && (
-            <Ionicons name="location-outline" size={14} color={lightTheme.textSecondary} style={{ marginLeft: 4 }}
+            <Ionicons
+              name="location-outline"
+              size={14}
+              color={lightTheme.textSecondary}
+              style={{ marginLeft: 4 }}
             />
           )}
         </View>
       </View>
-      <CustomText type={'title'} size={15} style={{marginBottom: 4}}>
-          {title}
+      <CustomText type={"title"} size={15} style={{ marginBottom: 4 }}>
+        {title}
+      </CustomText>
+      <CustomText size={12}>
+        {text?.length > 250 ? `${text?.substring(0, 250)}...` : text}
+      </CustomText>
+      <View style={styles.categoryContainer}>
+        <CustomText size={11} weight={'semibold'}>
+          {category.name}
         </CustomText>
-        <CustomText size={12}>
-          {text?.length > 250 ? `${text?.substring(0, 250)}...` : text}
-        </CustomText>
+      </View>
     </View>
   );
 };
@@ -52,20 +61,20 @@ const styles = StyleSheet.create({
     padding: 16,
     marginVertical: 8,
     marginHorizontal: 12,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderWidth: 1,
     borderColor: lightTheme.border,
     ...Platform.select({
       ios: {
-        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowColor: "rgba(0, 0, 0, 0.1)",
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 1,
         shadowRadius: 3,
       },
       android: {
         elevation: 3,
-      }
-    })
+      },
+    }),
   },
   header: {
     display: "flex",
@@ -77,4 +86,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  categoryContainer: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    backgroundColor: lightTheme.secondary,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 6
+  }
 });

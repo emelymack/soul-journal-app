@@ -1,29 +1,45 @@
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useSelector } from "react-redux";
-import { useGetEntryByIdQuery } from "../../services/journalApi";
+import {
+  selectEnrichedEntryById,
+  useGetCategoriesQuery,
+  useGetEntryByIdQuery,
+} from "../../services/journalApi";
 import Loader from "../../components/Loader";
 import CustomText from "../../components/customText/CustomText";
 import { lightTheme } from "../../global/theme";
 import Markdown from "react-native-markdown-display";
+import { useMemo } from "react";
 
 const EntryScreen = ({ route }) => {
   const userId = useSelector((state) => state.auth.user?.userId);
   const entryId = route.params?.entryId;
 
-  const {
-    data: entry,
-    isLoading,
-    isError,
-    error,
-  } = useGetEntryByIdQuery({ userId, entryId });
+  const { isLoading, error } = useGetEntryByIdQuery(
+    { userId, entryId },
+    {
+      skip: !userId || !entryId,
+    }
+  );
+  useGetCategoriesQuery();  
 
-  if (isLoading || !entry) return <Loader />;
-  if (isError) return <CustomText>Error: {error.message}</CustomText>;
+  const selectorArgs = useMemo(() => ({
+      userId,
+      entryId,
+    }), [userId, entryId]
+  );
+
+  const enrichedEntry = useSelector((state) =>
+    userId && entryId ? selectEnrichedEntryById(state, selectorArgs) : null
+  );
+
+  if (isLoading || !enrichedEntry) return <Loader />;
+  if (error) return <CustomText>Error: {error.message}</CustomText>;
 
   return (
     <ScrollView style={styles.container}>
-      {entry.location && (
+      {enrichedEntry.location && (
         <View style={[styles.locationTag]}>
           <Ionicons
             name="location-outline"
@@ -31,21 +47,21 @@ const EntryScreen = ({ route }) => {
             color={lightTheme.textPrimary}
             style={{ marginRight: 4 }}
           />
-          <CustomText weight={'semibold'}>{entry.location}</CustomText>
+          <CustomText weight={"semibold"}>{enrichedEntry.location}</CustomText>
         </View>
       )}
-      {entry.image && (
+      {enrichedEntry.image && (
         <View style={[styles.card, styles.imgCard]}>
           <Image
             style={styles.image}
             source={{
-              uri: `${entry.image}`,
+              uri: `${enrichedEntry.image}`,
             }}
           />
         </View>
       )}
       <View style={[styles.card, styles.txtCard]}>
-        <Markdown>{entry.text}</Markdown>
+        <Markdown>{enrichedEntry.text}</Markdown>
       </View>
     </ScrollView>
   );
@@ -89,6 +105,6 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingLeft: 6,
     paddingRight: 10,
-    alignSelf: 'flex-start'
+    alignSelf: "flex-start",
   },
 });
