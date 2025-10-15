@@ -3,17 +3,29 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../store/slices/authSlice";
 import { lightTheme } from "../global/theme";
+import { clearSession } from "../db";
 
 const LogoutBtn = () => {
   const dispatch = useDispatch();
 
+  const handleClearSession = async () => {
+    try {
+      await clearSession();
+      console.log("Session cleared successfully");
+    } catch (error) {
+      console.error("There has been an error trying to clear user session: ", error);
+    }
+
+    dispatch(clearUser())    
+  }
+
   const handleLogout = () => {
-     Alert.alert('👁️ Are you sure you want to leave?', "Don't worry, you can log back anytime 😉", [
+     Alert.alert('👁️ Are you sure you want to leave?', "Don't worry! You can log back anytime 😉", [
       {
         text: 'Cancel',
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => dispatch(clearUser())},
+      {text: 'OK', onPress: () => handleClearSession()},
     ]);
   }
 

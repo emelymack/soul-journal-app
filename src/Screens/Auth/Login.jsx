@@ -1,4 +1,4 @@
-import { Alert, Pressable, StyleSheet, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Switch, View } from "react-native";
 import FlatCard from "../../components/FlatCard";
 import { lightTheme } from "../../global/theme";
 import CustomText from "../../components/customText/CustomText";
@@ -10,6 +10,7 @@ import { useLoginMutation } from "../../services/authApi";
 import { useDispatch } from "react-redux";
 import { loginSchema } from "../../validations/loginSchema";
 import { setUser } from "../../store/slices/authSlice";
+import { clearSession, saveSession } from "../../db";
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,9 @@ const Login = ({ navigation, route }) => {
   const [errorEmail, setErrorEmail] = useState(null);
   const [errorPassword, setErrorPassword] = useState(null);
 
-  const [triggerLogin, { data, isSuccess, isError }] = useLoginMutation();
+  const [triggerLogin, { data, isSuccess, isError, error }] =
+    useLoginMutation();
+  const [persistSession, setPersistSession] = useState(false);
   const dispatch = useDispatch();
 
   const handleLogin = () => {
@@ -43,13 +46,22 @@ const Login = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      try {
-        dispatch(setUser(data));
-      } catch (error) {
-        console.error("Error logging in:", error);
+    const saveLoginSession = async () => {
+      if (isSuccess) {
+        try {
+          dispatch(setUser(data));
+
+          const { token } = data.idToken;
+          if (persistSession) {
+            await saveSession(token);
+          } else {
+            await clearSession(token);
+          }
+        } catch (error) {
+          console.log("Error logging session: ", error);
+        }
       }
-    }
+    };
     if (isError) {
       Alert.alert(
         "❌ Oops...",
@@ -57,7 +69,9 @@ const Login = ({ navigation, route }) => {
         [{ text: "Ok" }]
       );
     }
-  }, [data, isSuccess, isError]);
+
+    saveLoginSession();
+  }, [data, isSuccess, isError, error]);
 
   return (
     <View style={styles.container}>
@@ -95,6 +109,15 @@ const Login = ({ navigation, route }) => {
         >
           <CustomText>Sign In</CustomText>
         </ButtonPrimary>
+        <View style={styles.persistSessionContainer}>
+          <CustomText>Stay logged in?</CustomText>
+          <Switch
+            onValueChange={() => setPersistSession(!persistSession)}
+            value={persistSession}
+            trackColor={{ false: "#767577", true: lightTheme.accent }}
+            thumbColor={persistSession ? lightTheme.secondary : "#efeef1ff"}
+          />
+        </View>
 
         <View style={styles.footerContainer}>
           <CustomText size={12} style={{ marginRight: 3 }}>
@@ -134,5 +157,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 12,
+  },
+  persistSessionContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
