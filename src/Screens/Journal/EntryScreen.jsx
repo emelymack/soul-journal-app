@@ -1,14 +1,94 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useSelector } from "react-redux";
+import { useGetEntryByIdQuery } from "../../services/journalApi";
+import Loader from "../../components/Loader";
+import CustomText from "../../components/customText/CustomText";
+import { lightTheme } from "../../global/theme";
+import Markdown from "react-native-markdown-display";
 
-const EntryScreen = () => {
+const EntryScreen = ({ route }) => {
+  const userId = useSelector((state) => state.auth.user?.userId);
+  const entryId = route.params?.entryId;
+
+  const {
+    data: entry,
+    isLoading,
+    isError,
+    error,
+  } = useGetEntryByIdQuery({ userId, entryId });
+
+  if (isLoading || !entry) return <Loader />;
+  if (isError) return <CustomText>Error: {error.message}</CustomText>;
+
   return (
-    <View>
-      <Text>EntryScreen</Text>
-    </View>
-  )
-}
+    <ScrollView style={styles.container}>
+      {entry.location && (
+        <View style={[styles.locationTag]}>
+          <Ionicons
+            name="location-outline"
+            size={18}
+            color={lightTheme.textPrimary}
+            style={{ marginRight: 4 }}
+          />
+          <CustomText weight={'semibold'}>{entry.location}</CustomText>
+        </View>
+      )}
+      {entry.image && (
+        <View style={[styles.card, styles.imgCard]}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: `${entry.image}`,
+            }}
+          />
+        </View>
+      )}
+      <View style={[styles.card, styles.txtCard]}>
+        <Markdown>{entry.text}</Markdown>
+      </View>
+    </ScrollView>
+  );
+};
 
-export default EntryScreen
+export default EntryScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: lightTheme.background,
+  },
+  card: {
+    backgroundColor: lightTheme.background,
+    padding: 12,
+    elevation: 10,
+    borderRadius: 10,
+    marginHorizontal: 16,
+  },
+  imgCard: {
+    marginVertical: 12,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 8,
+  },
+  txtCard: {
+    marginBottom: 20,
+  },
+  locationTag: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 16,
+    marginTop: 8,
+    marginBottom: 6,
+    borderWidth: 1,
+    borderColor: lightTheme.border,
+    backgroundColor: lightTheme.background,
+    borderRadius: 6,
+    paddingVertical: 6,
+    paddingLeft: 6,
+    paddingRight: 10,
+    alignSelf: 'flex-start'
+  },
+});

@@ -21,6 +21,12 @@ export const journalApi = createApi({
       providesTags: ['Entries']
     }),
 
+    getEntryById: builder.query({
+      query: ({userId, entryId}) => `entries/${userId}/${entryId}.json`,
+      providesTags: ['Entries']
+    }),
+
+
     addEntry: builder.mutation({
       query: ({userId, entryData}) => ({
         url: `entries/${userId}.json`,
@@ -42,6 +48,7 @@ export const journalApi = createApi({
 
 export const {
   useGetEntriesQuery,
+  useGetEntryByIdQuery,
   useAddEntryMutation,
   useDeleteEntryMutation
 } = journalApi;
