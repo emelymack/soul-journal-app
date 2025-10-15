@@ -2,10 +2,14 @@ import { StyleSheet, View } from "react-native";
 import { lightTheme } from "../global/theme";
 import CustomText from "./customText/CustomText";
 import LogoutBtn from "./LogoutBtn";
+import BackBtn from "./BackBtn";
 
-const Header = ({ title, children }) => {
+const Header = ({ title, children, backBtn, style }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
+      <View style={styles.backBtnContainer}>
+        {backBtn && <BackBtn />}
+      </View>
       <CustomText type="title" weight="bold" size={24}>
         {title}
       </CustomText>
@@ -19,10 +23,16 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: 120,
+    minHeight: 120,
     width: "100%",
     padding: 25,
     backgroundColor: lightTheme.backgroundSecondary,
     justifyContent: "center",
+  },
+  backBtnContainer: {
+    position: "absolute",
+    top: 15,
+    left: 22,
+    opacity: 0.8
   },
 });
