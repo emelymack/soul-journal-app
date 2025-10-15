@@ -4,6 +4,7 @@ import { lightTheme } from "../../global/theme";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { format } from "date-fns";
+import CategoryTag from "../CategoryTag";
 
 const JournalListCard = ({ date, title, text, image, location, category }) => {
   return (
@@ -40,13 +41,11 @@ const JournalListCard = ({ date, title, text, image, location, category }) => {
       <CustomText type={"title"} size={15} style={{ marginBottom: 4 }}>
         {title}
       </CustomText>
-      <CustomText size={12}>
+      <CustomText size={12} style={{marginBottom: 8}}>
         {text?.length > 250 ? `${text?.substring(0, 250)}...` : text}
       </CustomText>
-      <View style={styles.categoryContainer}>
-        <CustomText size={11} weight={'semibold'}>
-          {category.name}
-        </CustomText>
+      <View style={{alignSelf: "flex-end"}}>
+        <CategoryTag category={category} />
       </View>
     </View>
   );
@@ -85,13 +84,5 @@ const styles = StyleSheet.create({
   headerItems: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  categoryContainer: {
-    alignSelf: 'flex-end',
-    marginTop: 10,
-    backgroundColor: lightTheme.secondary,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 6
   }
 });

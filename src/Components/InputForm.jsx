@@ -4,6 +4,7 @@ import { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { lightTheme } from "../global/theme";
+import Markdown from "react-native-markdown-display";
 
 const InputForm = ({
   name,
@@ -12,7 +13,9 @@ const InputForm = ({
   placeholder,
   keyboardType,
   isSecure,
-  error
+  error,
+  multiline,
+  numberOfLines = 1
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
@@ -22,12 +25,21 @@ const InputForm = ({
       <CustomText>{name}</CustomText>
       <View style={styles.inputWrapper}>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            multiline && {
+              height: 18 * numberOfLines, 
+              textAlignVertical: "top",
+              paddingTop: 10
+            },
+          ]}
           onChangeText={onChange}
-          value={value}
+          value={<Markdown>value</Markdown>}
           placeholder={placeholder}
           keyboardType={keyboardType || "text"}
           secureTextEntry={isSecure ? !isPasswordVisible : false}
+          multiline={multiline}
+          numberOfLines={multiline ? numberOfLines : 1}
         />
         {isSecure && (
           <TouchableOpacity
@@ -66,7 +78,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: lightTheme.border,
     padding: 10,
-    marginTop: 2,
+    marginTop: 4,
     backgroundColor: lightTheme.backgroundSecondary,
     borderRadius: 5,
   },
