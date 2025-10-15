@@ -34,7 +34,7 @@ const JournalListScreen = ({ navigation }) => {
 
   if (entriesError || categoriesError) {
     return <CustomText>Error: {error.message}</CustomText>;
-  }
+  }  
 
   const renderEntryItem = ({ item }) => (
     <Pressable

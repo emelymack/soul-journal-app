@@ -86,20 +86,21 @@ export const selectEnrichedEntries = (userId) => createSelector(
 )
 
 export const selectEnrichedEntryById = createSelector(
-    selectCategoriesResult,
-    (state, {userId, entryId}) => journalApi.endpoints.getEntryById.select({userId, entryId})(state),
+    // selectCategoriesResult,
+    (state, {userId, entryId}) => journalApi.endpoints.getEntryById.select({userId, entryId})(state)?.data,
+    (state) => journalApi.endpoints.getCategories.select()(state)?.data,
     (state, {entryId}) => entryId,
   
-  (categoriesResult, entryResult, entryId) => {
-    const entry = entryResult?.data;
-    const categories = categoriesResult?.data;
+  (entryData, categoriesData, entryId) => {
+    // const entry = entryData?.data;
+    // const categories = categoriesData?.data;
 
-    if (!entry || !categories) return undefined;
+    if (!entryData || !categoriesData) return undefined;
 
     return {
       id: entryId,
-      ...entry,
-      category: categories[entry.categoryId] || null
+      ...entryData,
+      category: categoriesData[entryData.categoryId] || null
     };
   }
 )

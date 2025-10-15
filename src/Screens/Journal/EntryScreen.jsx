@@ -35,7 +35,7 @@ const EntryScreen = ({ route }) => {
   );
 
   if (isLoading || !enrichedEntry) return <Loader />;
-  if (error) return <CustomText>Error: {error.message}</CustomText>;
+  if (error) return <CustomText>Error: {error.message}</CustomText>;  
 
   return (
     <ScrollView style={styles.container}>
@@ -61,7 +61,7 @@ const EntryScreen = ({ route }) => {
         </View>
       )}
       <View style={[styles.card, styles.txtCard]}>
-        <Markdown>{enrichedEntry.text}</Markdown>
+        <Markdown>{enrichedEntry.text || ''}</Markdown>
       </View>
     </ScrollView>
   );
