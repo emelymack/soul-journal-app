@@ -105,7 +105,7 @@ const EntryScreen = ({ navigation, route }) => {
         </View>
       )}
       <View style={[styles.card, styles.txtCard]}>
-        <Markdown style={markdownStyles}>{entry.text || ""}</Markdown>
+        <Markdown style={markdownStyles}>{entry.text}</Markdown>
       </View>
     </ScrollView>
   );

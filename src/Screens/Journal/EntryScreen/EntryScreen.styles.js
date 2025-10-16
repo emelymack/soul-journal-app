@@ -18,7 +18,7 @@ export const getStyles = (theme) => {
       },
       image: {
         width: "100%",
-        height: 200,
+        height: 300,
         borderRadius: 8,
       },
       txtCard: {
@@ -67,12 +67,13 @@ export const getStyles = (theme) => {
         fontSize: 14,
       },
       strong: {
-        color: theme.accent,
+        color: theme.mode === 'light' ? theme.textSecondary : theme.accent,
         fontWeight: "bold",
       },
       em: {
         color: theme.textSecondary,
-        fontStyle: "italic",
+        fontStyle: "normal",
+        fontFamily: 'Nunito-Italic'
       },
       heading1: {
         color: theme.mode === 'light' ? theme.primary : theme.secondary,
