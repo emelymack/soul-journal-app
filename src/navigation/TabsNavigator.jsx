@@ -3,11 +3,37 @@ import { StyleSheet, View } from "react-native";
 import JournalStackNavigator from "./JournalStackNavigator";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Feather from "@expo/vector-icons/Feather";
-import { lightTheme } from "../global/theme";
+import { useThemeColors } from "../hooks/useThemeColors";
+import { useDispatch } from "react-redux";
+import { toggleTheme } from "../store/slices/themeSlice";
 
 const Tab = createBottomTabNavigator();
 
 const TabsNavigator = () => {
+  const theme = useThemeColors();
+  const dispatch = useDispatch();
+
+  const styles = StyleSheet.create({
+    tabBar: {
+      height: 62,
+      paddingTop: 5,
+      backgroundColor: theme.background,
+      borderColor: null
+    },
+    iconContainer: {
+      backgroundColor: theme.primary,
+      position: "absolute",
+      width: 70,
+      height: 50,
+      top: -5,
+      borderRadius: 10,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      opacity: 0.8,
+    },
+  });
+
   return (
     <Tab.Navigator
       initialRouteName="Journal"
@@ -15,10 +41,11 @@ const TabsNavigator = () => {
         headerShown: false,
         tabBarStyle: styles.tabBar,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: lightTheme.textPrimary,
-        tabBarInactiveTintColor: lightTheme.textSecondary,
+        tabBarActiveTintColor: theme.textPrimary,
+        tabBarInactiveTintColor: theme.textSecondary,
       }}
     >
+      {/* Journal Entries List Screen */}
       <Tab.Screen
         name="Journal"
         component={JournalStackNavigator}
@@ -30,14 +57,14 @@ const TabsNavigator = () => {
               <Feather
                 name="book-open"
                 size={24}
-                color={
-                  focused ? lightTheme.textPrimary : lightTheme.textSecondary
-                }
+                color={focused ? theme.textPrimary : theme.textSecondary}
               />
             </>
           ),
         }}
       />
+
+      {/* New Entry Screen */}
       <Tab.Screen
         name="New Entry"
         component={JournalStackNavigator}
@@ -49,12 +76,32 @@ const TabsNavigator = () => {
               <FontAwesome6
                 name="plus"
                 size={24}
-                color={
-                  focused ? lightTheme.textPrimary : lightTheme.textSecondary
-                }
+                color={focused ? theme.textPrimary : theme.textSecondary}
               />
             </>
           ),
+        }}
+      />
+
+      {/* Theme Toggler */}
+      <Tab.Screen
+        name="Theme"
+        component={() => null}
+        initialParams={{ screen: "New Journal Entry" }}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Feather 
+              name={theme.mode === 'dark' ? "sun" : "moon"}
+              size={24}
+              color={theme.textSecondary}
+            />
+          ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault()
+            dispatch(toggleTheme())
+          }
         }}
       />
     </Tab.Navigator>
@@ -62,22 +109,3 @@ const TabsNavigator = () => {
 };
 
 export default TabsNavigator;
-
-const styles = StyleSheet.create({
-  tabBar: {
-    height: 75,
-    paddingTop: 10,
-  },
-  iconContainer: {
-    backgroundColor: lightTheme.primary,
-    position: "absolute",
-    width: 70,
-    height: 60,
-    top: -7,
-    borderRadius: 10,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.8
-  },
-});

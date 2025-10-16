@@ -14,7 +14,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   background: "#0D1117",        // Primary background
-  backgroundSecondary: "#1E1E2F", // Secondary background
+  backgroundSecondary: "#26263eff", // Secondary background
   primary: "#5C6BC0",           // Primary
   secondary: "#FFD54F",         // Secondary
   accent: "#B39DDB",            // Accent

@@ -1,18 +1,20 @@
-import { Text, StyleSheet, View } from "react-native";
-import { lightTheme } from "../global/theme";
+import { StyleSheet, View } from "react-native";
+import { useThemeColors } from "../hooks/useThemeColors";
 
 const FlatCard = ({ children, style }) => {
+  const theme = useThemeColors();
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: theme.backgroundSecondary,
+      borderRadius: 10,
+      padding: 16,
+      margin: 16,
+      elevation: 10,
+    },
+  });
+
   return <View style={[styles.container, style]}>{children}</View>;
 };
 
 export default FlatCard;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: lightTheme.background,
-    borderRadius: 10,
-    padding: 16,
-    margin: 16,
-    elevation: 10
-  },
-});

@@ -1,6 +1,5 @@
 import { Alert, Pressable, StyleSheet, Switch, View } from "react-native";
 import FlatCard from "../../components/FlatCard";
-import { lightTheme } from "../../global/theme";
 import CustomText from "../../components/customText/CustomText";
 import { useEffect, useState } from "react";
 import ButtonPrimary from "../../components/ButtonPrimary";
@@ -11,8 +10,11 @@ import { useDispatch } from "react-redux";
 import { loginSchema } from "../../validations/loginSchema";
 import { setUser } from "../../store/slices/authSlice";
 import { clearSession, saveSession } from "../../db";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 const Login = ({ navigation, route }) => {
+  const theme = useThemeColors();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorEmail, setErrorEmail] = useState(null);
@@ -74,13 +76,13 @@ const Login = ({ navigation, route }) => {
   }, [data, isSuccess, isError, error]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <FlatCard style={styles.card}>
         <Logo />
-        <CustomText type={"title"} size={18}>
+        <CustomText type={"title"} size={20}>
           Welcome Back
         </CustomText>
-        <CustomText size={12} style={{ marginTop: 8 }}>
+        <CustomText size={13} style={{ marginTop: 8 }}>
           Sign in to continue your mindful journey
         </CustomText>
 
@@ -105,7 +107,7 @@ const Login = ({ navigation, route }) => {
         <ButtonPrimary
           onPress={handleLogin}
           style={{ width: "100%", marginTop: 15 }}
-          backgroundColor={lightTheme.primary}
+          backgroundColor={theme.primary}
         >
           <CustomText>Sign In</CustomText>
         </ButtonPrimary>
@@ -114,17 +116,17 @@ const Login = ({ navigation, route }) => {
           <Switch
             onValueChange={() => setPersistSession(!persistSession)}
             value={persistSession}
-            trackColor={{ false: "#767577", true: lightTheme.accent }}
-            thumbColor={persistSession ? lightTheme.secondary : "#efeef1ff"}
+            trackColor={{ false: "#767577", true: theme.accent }}
+            thumbColor={persistSession ? theme.secondary : "#efeef1ff"}
           />
         </View>
 
         <View style={styles.footerContainer}>
-          <CustomText size={12} style={{ marginRight: 3 }}>
+          <CustomText size={13} style={{ marginRight: 5 }}>
             Don't have an account?
           </CustomText>
           <Pressable onPress={() => navigation.navigate("SignUp")}>
-            <CustomText size={12} weight="bold" color={"primary"}>
+            <CustomText size={14} weight="semibold" color={"primary"}>
               Sign up
             </CustomText>
           </Pressable>
@@ -136,30 +138,29 @@ const Login = ({ navigation, route }) => {
 
 export default Login;
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: lightTheme.background,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-  card: {
-    width: "90%",
-    display: "flex",
-    alignItems: "center",
-    paddingHorizontal: 25,
-    paddingVertical: 30,
-  },
-  footerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 12,
-  },
-  persistSessionContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});
+  const styles = StyleSheet.create({
+    container: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flex: 1,
+    },
+    card: {
+      width: "90%",
+      display: "flex",
+      alignItems: "center",
+      paddingHorizontal: 25,
+      paddingVertical: 30,
+    },
+    footerContainer: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 12,
+    },
+    persistSessionContainer: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+    },
+  });

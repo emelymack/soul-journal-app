@@ -2,10 +2,11 @@ import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../store/slices/authSlice";
-import { lightTheme } from "../global/theme";
 import { clearSession } from "../db";
+import { useThemeColors } from "../hooks/useThemeColors";
 
 const LogoutBtn = () => {
+  const theme = useThemeColors();
   const dispatch = useDispatch();
 
   const handleClearSession = async () => {
@@ -35,7 +36,7 @@ const LogoutBtn = () => {
         <AntDesign 
           name="logout" 
           size={22} 
-          color={lightTheme.textPrimary}
+          color={theme.textPrimary}
         />
       </Pressable>
     </View>

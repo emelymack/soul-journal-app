@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import { lightTheme } from "../global/theme";
+import { useThemeColors } from "../hooks/useThemeColors";
 
 const ButtonPrimary = ({
   children,
@@ -9,6 +9,8 @@ const ButtonPrimary = ({
   width,
   disabled = false,
 }) => {
+  const theme = useThemeColors();
+
   return (
     <View style={styles.container}>
       <Pressable
@@ -16,7 +18,7 @@ const ButtonPrimary = ({
         style={[
           styles.button,
           {
-            backgroundColor: backgroundColor || lightTheme.accent,
+            backgroundColor: backgroundColor || theme.accent,
             width: width || "100%",
           },
           style,

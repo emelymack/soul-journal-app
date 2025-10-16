@@ -10,9 +10,10 @@ import {
   useGetEntriesQuery,
 } from "../../services/journalApi";
 import Loader from "../../components/Loader";
-import { lightTheme } from "../../global/theme";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 const JournalListScreen = ({ navigation }) => {
+  const theme = useThemeColors();
   const userId = useSelector((state) => state.auth.user?.userId);
 
   const {
@@ -57,7 +58,7 @@ const JournalListScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1, backgroundColor: theme.background}}>
       <ButtonPrimary
         onPress={() => navigation.navigate("New Journal Entry")}
         width={"95%"}
@@ -66,7 +67,7 @@ const JournalListScreen = ({ navigation }) => {
           <FontAwesome6
             name="plus"
             size={18}
-            color={lightTheme.textPrimary}
+            color={theme.textPrimary}
             style={{ marginRight: 8 }}
           />
           <CustomText size={15} weight={"bold"}>
@@ -90,9 +91,3 @@ const JournalListScreen = ({ navigation }) => {
 };
 
 export default JournalListScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, // Le dice al View que ocupe todo el espacio vertical disponible.
-  }
-});

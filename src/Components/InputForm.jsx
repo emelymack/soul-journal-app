@@ -3,8 +3,8 @@ import CustomText from "./customText/CustomText";
 import { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { lightTheme } from "../global/theme";
-import Markdown from "react-native-markdown-display";
+import { theme } from "../global/theme";
+import { useThemeColors } from "../hooks/useThemeColors";
 
 const InputForm = ({
   name,
@@ -15,11 +15,45 @@ const InputForm = ({
   isSecure,
   error,
   multiline,
-  numberOfLines = 1
+  numberOfLines = 1,
 }) => {
+    const theme = useThemeColors();
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
+
+  const styles = StyleSheet.create({
+    container: {
+      width: "100%",
+      marginTop: 20,
+    },
+    input: {
+      height: 40,
+      borderWidth: 1,
+      borderColor: theme.border,
+      padding: 10,
+      marginTop: 4,
+      backgroundColor: theme.backgroundSecondary,
+      color: theme.textPrimary,
+      borderRadius: 5,
+    },
+    inputWrapper: {
+      position: "relative",
+      display: "flex",
+      justifyContent: "center",
+    },
+    focused: {
+      borderColor: theme.accent,
+      borderWidth: 1.5,
+      elevation: 5,
+    },
+    passwordEye: {
+      position: "absolute",
+      right: 12,
+      bottom: 10,
+      opacity: 0.65,
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -29,11 +63,11 @@ const InputForm = ({
           style={[
             styles.input,
             multiline && {
-              height: 18 * numberOfLines, 
+              height: 18 * numberOfLines,
               textAlignVertical: "top",
-              paddingTop: 10
+              paddingTop: 10,
             },
-            isFocused && styles.focused
+            isFocused && styles.focused,
           ]}
           onChangeText={onChange}
           value={value}
@@ -44,6 +78,7 @@ const InputForm = ({
           numberOfLines={multiline ? numberOfLines : 1}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          placeholderTextColor={theme.textSecondary}
         />
         {isSecure && (
           <TouchableOpacity
@@ -51,17 +86,14 @@ const InputForm = ({
             style={styles.passwordEye}
           >
             {isPasswordVisible ? (
-              <AntDesign name="eye-invisible" size={18} color="black" />
+              <AntDesign name="eye-invisible" size={18} color={theme.textPrimary} />
             ) : (
-              <Feather name="eye" size={18} color="black" />
+              <Feather name="eye" size={18} color={theme.textPrimary} />
             )}
           </TouchableOpacity>
         )}
         {error && (
-          <CustomText 
-            color={"error"}
-            size={10}
-          >
+          <CustomText color={"error"} size={10}>
             {error}
           </CustomText>
         )}
@@ -71,34 +103,3 @@ const InputForm = ({
 };
 
 export default InputForm;
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    marginTop: 20,
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: lightTheme.border,
-    padding: 10,
-    marginTop: 4,
-    backgroundColor: lightTheme.backgroundSecondary,
-    borderRadius: 5,
-  },
-  inputWrapper: {
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-  },
-  focused: {
-    borderColor: lightTheme.accent,
-    borderWidth: 1.5,
-    elevation: 5
-  },
-  passwordEye: {
-    position: "absolute",
-    right: 12,
-    opacity: 0.65,
-  }
-});

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { lightTheme } from "../../global/theme";
 import { useEffect, useMemo, useState } from "react";
 import InputForm from "../../components/InputForm";
 import {
@@ -22,8 +21,10 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 const NewEntryScreen = ({ navigation }) => {
+  const theme = useThemeColors();
   const userId = useSelector((state) => state.auth.user.userId);
   const { data: categoriesData, isLoading } = useGetCategoriesQuery();
   const [addEntry, { isLoading: isSaving }] = useAddEntryMutation();
@@ -114,7 +115,7 @@ const NewEntryScreen = ({ navigation }) => {
         "Please, complete your Title, Mood and Thoughts 🤗"
       );
       return;
-    }    
+    }
 
     const entryData = {
       title: title,
@@ -140,6 +141,48 @@ const NewEntryScreen = ({ navigation }) => {
   };
 
   useEffect(() => {}, [entryImage, isFormValid, isSaving]);
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: theme.background,
+      paddingHorizontal: 12,
+    },
+    extrasTitle: {
+      paddingBottom: 10,
+      borderBottomWidth: 0.5,
+      borderBottomColor: theme.textPrimary,
+    },
+    buttonsContainer: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    extraButton: {
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      marginTop: 15,
+      borderWidth: 1,
+      borderColor: theme.border,
+      padding: 15,
+      borderRadius: 15,
+    },
+    entryImage: {
+      width: "100%",
+      height: 250,
+      borderRadius: 10,
+      marginTop: 15,
+      resizeMode: "cover",
+    },
+    submitBtn: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 2,
+      marginBottom: 30,
+      elevation: 1,
+    },
+  });
 
   return (
     <ScrollView style={styles.container}>
@@ -167,17 +210,19 @@ const NewEntryScreen = ({ navigation }) => {
       />
 
       <FlatCard style={{ marginHorizontal: 0, elevation: 2 }}>
-        <CustomText style={styles.extrasTitle}>Want to add a memory?</CustomText>
+        <CustomText style={styles.extrasTitle}>
+          Want to add a memory?
+        </CustomText>
         <View style={styles.buttonsContainer}>
           <Pressable onPress={handleAddPhoto} style={styles.extraButton}>
-            <Feather name="camera" size={20} color={lightTheme.textSecondary} />
+            <Feather name="camera" size={20} color={theme.textSecondary} />
             <CustomText style={{ marginTop: 5 }}>Add Photo</CustomText>
           </Pressable>
           {/* <Pressable style={styles.extraButton}>
             <Ionicons
               name="location-outline"
               size={20}
-              color={lightTheme.textSecondary}
+              color={theme.textSecondary}
             />
             <CustomText style={{ marginTop: 5 }}>Add Location</CustomText>
           </Pressable> */}
@@ -207,45 +252,3 @@ const NewEntryScreen = ({ navigation }) => {
 };
 
 export default NewEntryScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: lightTheme.background,
-    paddingHorizontal: 12,
-  },
-  extrasTitle: {
-    paddingBottom: 10,
-    borderBottomWidth: 0.5,
-    borderBottomColor: lightTheme.textPrimary,
-  },
-  buttonsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  extraButton: {
-    display: "flex",
-    alignItems: "center",
-    width: "100%",
-    marginTop: 15,
-    borderWidth: 1,
-    borderColor: lightTheme.border,
-    padding: 15,
-    borderRadius: 15,
-  },
-  entryImage: {
-    width: "100%",
-    height: 250,
-    borderRadius: 10,
-    marginTop: 15,
-    resizeMode: "cover",
-  },
-  submitBtn: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 2,
-    marginBottom: 30,
-    elevation: 1,
-  },
-});

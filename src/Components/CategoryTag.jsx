@@ -1,17 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import CustomText from "./customText/CustomText";
-import { lightTheme } from "../global/theme";
+import { useThemeColors } from "../hooks/useThemeColors";
 
 const CategoryTag = ({ category }) => {
+  const theme = useThemeColors();
   const { name, emoji } = category
 
   return (
-    <View style={styles.categoryContainer}>
+    <View style={[styles.categoryContainer, {backgroundColor: theme === 'light' ? theme.secondary : theme.primary}]}>
       {emoji && <CustomText>{emoji}</CustomText>}
       <CustomText
         size={11}
         weight={"semibold"}
         style={emoji && { marginLeft: 5 }}
+        color={theme.background}
       >
         {name}
       </CustomText>
@@ -26,7 +28,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: lightTheme.secondary,
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: 6

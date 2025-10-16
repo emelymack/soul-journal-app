@@ -1,5 +1,4 @@
 import { Alert, Pressable, StyleSheet, View } from "react-native";
-import { lightTheme } from "../../global/theme";
 import FlatCard from "../../components/FlatCard";
 import CustomText from "../../components/customText/CustomText";
 import Logo from "../../components/Logo";
@@ -8,8 +7,11 @@ import ButtonPrimary from "../../components/ButtonPrimary";
 import { useEffect, useState } from "react";
 import { useSignUpMutation } from "../../services/authApi";
 import { signUpSchema } from "../../validations/signUpSchema";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 const SignUp = ({ navigation, route }) => {
+    const theme = useThemeColors();
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,7 +83,9 @@ const SignUp = ({ navigation, route }) => {
   }, [result]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <FlatCard style={styles.card}>
         <Logo />
         <CustomText type={"title"} size={18}>
@@ -129,17 +133,17 @@ const SignUp = ({ navigation, route }) => {
         <ButtonPrimary
           onPress={onSubmit}
           style={{ width: "100%", marginTop: 15 }}
-          backgroundColor={lightTheme.primary}
+          backgroundColor={theme.primary}
         >
           <CustomText>Create Account</CustomText>
         </ButtonPrimary>
 
         <View style={styles.footerContainer}>
-          <CustomText size={12} style={{ marginRight: 3 }}>
+          <CustomText size={13} style={{ marginRight: 5 }}>
             Already have an account?
           </CustomText>
           <Pressable onPress={() => navigation.navigate("Login")}>
-            <CustomText size={12} weight="bold" color={"primary"}>
+            <CustomText size={14} weight="semibold" color={"primary"}>
               Sign in
             </CustomText>
           </Pressable>
@@ -153,7 +157,6 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: lightTheme.background,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
