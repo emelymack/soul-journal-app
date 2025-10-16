@@ -19,7 +19,7 @@ export const darkTheme = {
   backgroundSecondary: "#26263eff", // Secondary background
   primary: "#5C6BC0",           // Primary
   secondary: "#FFD54F",         // Secondary
-  accent: "#B39DDB",            // Accent
+  accent: "#b39ddbcf",            // Accent
   textPrimary: "#E8EAF6",       // Primary text
   textSecondary: "#9FA8DA",     // Secondary text
   // card: "#F8F7FB",

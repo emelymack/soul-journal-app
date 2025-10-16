@@ -7,13 +7,13 @@ const CategoryTag = ({ category }) => {
   const { name, emoji } = category
 
   return (
-    <View style={[styles.categoryContainer, {backgroundColor: theme === 'light' ? theme.secondary : theme.primary}]}>
+    <View style={[styles.categoryContainer, {backgroundColor: theme.mode === 'light' ? theme.accent : theme.secondary}]}>
       {emoji && <CustomText>{emoji}</CustomText>}
       <CustomText
         size={11}
         weight={"semibold"}
         style={emoji && { marginLeft: 5 }}
-        color={theme.background}
+        color={theme.mode === 'light' ? 'textSecondary' : 'background'}
       >
         {name}
       </CustomText>

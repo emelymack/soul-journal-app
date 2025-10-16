@@ -66,11 +66,11 @@ const JournalListScreen = ({ navigation }) => {
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <FontAwesome6
             name="plus"
-            size={18}
-            color={theme.textPrimary}
+            size={16}
+            color={theme.mode === 'light' ? theme.textPrimary : theme.secondary}
             style={{ marginRight: 8 }}
           />
-          <CustomText size={15} weight={"bold"}>
+          <CustomText size={16} weight={"semibold"} color={theme.mode === 'dark' && 'secondary'}>
             New Entry
           </CustomText>
         </View>

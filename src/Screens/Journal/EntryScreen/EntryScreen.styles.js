@@ -1,8 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const getStyles = (theme) => {
-  console.log(theme);
-  
+export const getStyles = (theme) => {  
   return {
     styles: StyleSheet.create({
       container: {
@@ -26,18 +24,26 @@ export const getStyles = (theme) => {
       txtCard: {
         marginBottom: 20,
       },
-      markdownStyle: {
-        body: {
-          color: theme.textPrimary,
-        },
-      },
       entryTags: {
         display: "flex",
         flexDirection: "row",
-        // justifyContent: "flex-end",
+        justifyContent: "space-between",
         marginHorizontal: 16,
         marginTop: 8,
         marginBottom: 6,
+      },
+      actionsContainer: {
+        display: "flex", 
+        flexDirection: "row",
+        justifyContent: "space-between",
+        // width: 75,
+        marginEnd: 2
+      },
+      actionBtn: {
+        backgroundColor: theme.mode === 'light' ? theme.background : theme.accent,
+        elevation: 2,
+        padding: 5,
+        borderRadius: 6
       },
       locationTag: {
         display: "flex",
@@ -54,6 +60,7 @@ export const getStyles = (theme) => {
         alignSelf: "flex-start",
       },
     }),
+
     markdownStyles: StyleSheet.create({
       body: {
         color: theme.textPrimary,
