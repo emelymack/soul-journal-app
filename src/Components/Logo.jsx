@@ -7,7 +7,7 @@ const Logo = () => {
     <View style={styles.logoContainer}>
       <MaterialCommunityIcons
         name="flower-outline"
-        size={30}
+        size={40}
         color={lightTheme.textPrimary}
       />
     </View>
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 15,
     marginBottom: 10,
     borderRadius: "50%",
-    width: 70,
+    width: 72,
   },
 });

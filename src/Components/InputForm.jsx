@@ -17,6 +17,7 @@ const InputForm = ({
   multiline,
   numberOfLines = 1
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
 
@@ -32,14 +33,17 @@ const InputForm = ({
               textAlignVertical: "top",
               paddingTop: 10
             },
+            isFocused && styles.focused
           ]}
           onChangeText={onChange}
-          value={<Markdown>value</Markdown>}
+          value={value}
           placeholder={placeholder}
           keyboardType={keyboardType || "text"}
           secureTextEntry={isSecure ? !isPasswordVisible : false}
           multiline={multiline}
           numberOfLines={multiline ? numberOfLines : 1}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
         {isSecure && (
           <TouchableOpacity
@@ -86,6 +90,11 @@ const styles = StyleSheet.create({
     position: "relative",
     display: "flex",
     justifyContent: "center",
+  },
+  focused: {
+    borderColor: lightTheme.accent,
+    borderWidth: 1.5,
+    elevation: 5
   },
   passwordEye: {
     position: "absolute",

@@ -8,7 +8,6 @@ import MainNavigator from "./src/navigation/MainNavigator";
 export default function App() {
   return (
     <RootLayout>
-      
           <Provider store={soulJournalStore}>
             <View style={styles.container}>
               <MainNavigator />
@@ -23,8 +22,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   }
 });
