@@ -1,5 +1,5 @@
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../store/slices/authSlice";
 import { clearSession } from "../db";
@@ -14,30 +14,33 @@ const LogoutBtn = () => {
       await clearSession();
       console.log("Session cleared successfully");
     } catch (error) {
-      console.error("There has been an error trying to clear user session: ", error);
+      console.error(
+        "There has been an error trying to clear user session: ",
+        error
+      );
     }
 
-    dispatch(clearUser())    
-  }
+    dispatch(clearUser());
+  };
 
   const handleLogout = () => {
-     Alert.alert('👁️ Are you sure you want to leave?', "Don't worry! You can log back anytime 😉", [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => handleClearSession()},
-    ]);
-  }
+    Alert.alert(
+      "👁️ Are you sure you want to leave?",
+      "Don't worry! You can log back anytime 😉",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => handleClearSession() },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleLogout} style={{'position': 'relative'}}>
-        <AntDesign 
-          name="logout" 
-          size={22} 
-          color={theme.textPrimary}
-        />
+      <Pressable onPress={handleLogout} style={{ position: "relative" }}>
+        <MaterialIcons name="logout" size={22} color={theme.textPrimary} />
       </Pressable>
     </View>
   );
@@ -50,6 +53,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 15,
     right: 15,
-    opacity: 0.8
-  }
+    opacity: 0.8,
+  },
 });

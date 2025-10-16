@@ -2,7 +2,7 @@ import { Alert, Pressable, StyleSheet, View } from "react-native";
 import FlatCard from "../../components/FlatCard";
 import CustomText from "../../components/customText/CustomText";
 import Logo from "../../components/Logo";
-import InputForm from "../../components/InputForm";
+import InputForm from "../../components/InputForm/InputForm";
 import ButtonPrimary from "../../components/ButtonPrimary";
 import { useEffect, useState } from "react";
 import { useSignUpMutation } from "../../services/authApi";

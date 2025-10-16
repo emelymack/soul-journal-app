@@ -86,10 +86,9 @@ const TabsNavigator = () => {
       {/* Theme Toggler */}
       <Tab.Screen
         name="Theme"
-        component={() => null}
         initialParams={{ screen: "New Journal Entry" }}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: () => (
             <Feather 
               name={theme.mode === 'dark' ? "sun" : "moon"}
               size={24}
@@ -103,7 +102,9 @@ const TabsNavigator = () => {
             dispatch(toggleTheme())
           }
         }}
-      />
+      >
+      {() => null}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 };

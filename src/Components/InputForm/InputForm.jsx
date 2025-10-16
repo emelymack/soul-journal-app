@@ -1,10 +1,10 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import CustomText from "./customText/CustomText";
-import { useState } from "react";
+import { TextInput, TouchableOpacity, View } from "react-native";
+import CustomText from "../customText/CustomText";
+import { useMemo, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { theme } from "../global/theme";
-import { useThemeColors } from "../hooks/useThemeColors";
+import { useThemeColors } from "../../hooks/useThemeColors";
+import { getStyles } from "./InputForm.styles";
 
 const InputForm = ({
   name,
@@ -17,43 +17,12 @@ const InputForm = ({
   multiline,
   numberOfLines = 1,
 }) => {
-    const theme = useThemeColors();
+  const theme = useThemeColors();
+  const { styles } = useMemo(() => getStyles(theme), [theme])
+
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
-
-  const styles = StyleSheet.create({
-    container: {
-      width: "100%",
-      marginTop: 20,
-    },
-    input: {
-      height: 40,
-      borderWidth: 1,
-      borderColor: theme.border,
-      padding: 10,
-      marginTop: 4,
-      backgroundColor: theme.backgroundSecondary,
-      color: theme.textPrimary,
-      borderRadius: 5,
-    },
-    inputWrapper: {
-      position: "relative",
-      display: "flex",
-      justifyContent: "center",
-    },
-    focused: {
-      borderColor: theme.accent,
-      borderWidth: 1.5,
-      elevation: 5,
-    },
-    passwordEye: {
-      position: "absolute",
-      right: 12,
-      bottom: 10,
-      opacity: 0.65,
-    },
-  });
 
   return (
     <View style={styles.container}>
@@ -86,7 +55,11 @@ const InputForm = ({
             style={styles.passwordEye}
           >
             {isPasswordVisible ? (
-              <AntDesign name="eye-invisible" size={18} color={theme.textPrimary} />
+              <AntDesign
+                name="eye-invisible"
+                size={18}
+                color={theme.textPrimary}
+              />
             ) : (
               <Feather name="eye" size={18} color={theme.textPrimary} />
             )}

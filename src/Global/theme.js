@@ -1,4 +1,5 @@
 export const lightTheme = {
+  mode: "light",
   background: "#F8F7FB",        // Primary background
   backgroundSecondary: "#FFEFD5", // Secondary background
   primary: "#B39DDB",           // Primary
@@ -13,6 +14,7 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
+  mode: "dark",
   background: "#0D1117",        // Primary background
   backgroundSecondary: "#26263eff", // Secondary background
   primary: "#5C6BC0",           // Primary

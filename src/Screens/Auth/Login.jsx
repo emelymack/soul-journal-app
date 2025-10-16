@@ -3,7 +3,7 @@ import FlatCard from "../../components/FlatCard";
 import CustomText from "../../components/customText/CustomText";
 import { useEffect, useState } from "react";
 import ButtonPrimary from "../../components/ButtonPrimary";
-import InputForm from "../../components/InputForm";
+import InputForm from "../../components/InputForm/InputForm";
 import Logo from "../../components/Logo";
 import { useLoginMutation } from "../../services/authApi";
 import { useDispatch } from "react-redux";

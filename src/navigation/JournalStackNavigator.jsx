@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import JournalListScreen from "../screens/Journal/JournalListScreen";
 import Header from "../components/Header";
-import EntryScreen from "../screens/Journal/EntryScreen";
-import NewEntryScreen from "../screens/Journal/NewEntryScreen";
+import EntryScreen from "../screens/Journal/EntryScreen/EntryScreen";
+import NewEntryScreen from "../screens/Journal/NewEntryScreen/NewEntryScreen";
 import JournalEntryHeader from "../components/journal/JournalEntryHeader";
 
 const Stack = createNativeStackNavigator();
