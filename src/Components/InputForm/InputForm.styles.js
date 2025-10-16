@@ -14,7 +14,7 @@ export const getStyles = (theme) => {
         padding: 10,
         marginTop: 4,
         borderRadius: 5,
-        backgroundColor: theme.mode === 'light' ? theme.background : theme.backgroundSecondary,
+        backgroundColor: theme.backgroundSecondary,
         color: theme.textPrimary,
       },
       inputWrapper: {
