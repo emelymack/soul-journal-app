@@ -35,7 +35,7 @@ const NewEntryScreen = ({ navigation }) => {
 
   const categoriesList = useMemo(() => {
     if (!categoriesData) return [];
-    return Object.values(categoriesData);
+    return categoriesData.filter(Boolean);
   }, [categoriesData]);
 
   if (isLoading) {
@@ -56,7 +56,7 @@ const NewEntryScreen = ({ navigation }) => {
 
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [3, 2],
+      aspect: [4, 4],
       quality: 0.75,
       base64: true,
     });
@@ -79,7 +79,7 @@ const NewEntryScreen = ({ navigation }) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
-      aspect: [3, 2],
+      aspect: [4, 4],
       quality: 0.75,
       base64: true,
     });
@@ -105,6 +105,38 @@ const NewEntryScreen = ({ navigation }) => {
       { text: "🖼️ Choose from gallery", onPress: pickImage },
       { text: "Cancel", style: "cancel" },
     ]);
+  };
+
+  const handleSaveEntry = async () => {
+    if (!isFormValid) {
+      Alert.alert(
+        "Incomplete fields",
+        "Please, complete your Title, Mood and Thoughts 🤗"
+      );
+      return;
+    }    
+
+    const entryData = {
+      title: title,
+      text: entryText,
+      categoryId: selectedCategory.id,
+      date: new Date().toISOString(),
+      image: entryImage,
+      location: null,
+    };
+
+    try {
+      await addEntry({ userId, entryData }).unwrap();
+
+      Alert.alert(
+        "Saved!",
+        "A precious moment of reflection, beautifully captured. Thank you for honoring your present 💫"
+      );
+      navigation.goBack();
+    } catch (error) {
+      console.error("Failed to save the entry: ", error);
+      Alert.alert("Error", "We could not save your entry. Please, try again.");
+    }
   };
 
   useEffect(() => {}, [entryImage, isFormValid, isSaving]);
@@ -135,20 +167,20 @@ const NewEntryScreen = ({ navigation }) => {
       />
 
       <FlatCard style={{ marginHorizontal: 0, elevation: 2 }}>
-        <CustomText style={styles.extrasTitle}>Add Media & Location</CustomText>
+        <CustomText style={styles.extrasTitle}>Want to add a memory?</CustomText>
         <View style={styles.buttonsContainer}>
           <Pressable onPress={handleAddPhoto} style={styles.extraButton}>
             <Feather name="camera" size={20} color={lightTheme.textSecondary} />
             <CustomText style={{ marginTop: 5 }}>Add Photo</CustomText>
           </Pressable>
-          <Pressable style={styles.extraButton}>
+          {/* <Pressable style={styles.extraButton}>
             <Ionicons
               name="location-outline"
               size={20}
               color={lightTheme.textSecondary}
             />
             <CustomText style={{ marginTop: 5 }}>Add Location</CustomText>
-          </Pressable>
+          </Pressable> */}
         </View>
         {entryImage && (
           <Image
@@ -161,8 +193,7 @@ const NewEntryScreen = ({ navigation }) => {
       </FlatCard>
 
       <ButtonPrimary
-        // onPress={handleSaveEntry}
-        onPress={() => console.log('button pressed')}
+        onPress={handleSaveEntry}
         style={styles.submitBtn}
         disabled={!isFormValid || isSaving}
       >
@@ -195,7 +226,7 @@ const styles = StyleSheet.create({
   extraButton: {
     display: "flex",
     alignItems: "center",
-    width: "49%",
+    width: "100%",
     marginTop: 15,
     borderWidth: 1,
     borderColor: lightTheme.border,
@@ -204,7 +235,7 @@ const styles = StyleSheet.create({
   },
   entryImage: {
     width: "100%",
-    height: 200,
+    height: 250,
     borderRadius: 10,
     marginTop: 15,
     resizeMode: "cover",
@@ -216,5 +247,5 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 30,
     elevation: 1,
-  }
+  },
 });

@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   entryTags: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    // justifyContent: "flex-end",
     marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 6,

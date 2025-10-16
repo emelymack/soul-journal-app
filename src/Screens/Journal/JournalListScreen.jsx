@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { FlatList, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import CustomText from "../../components/customText/CustomText";
 import JournalListCard from "../../components/journal/JournalListCard";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -21,7 +21,6 @@ const JournalListScreen = ({ navigation }) => {
   } = useGetEntriesQuery(userId);
 
   const {
-    // data: categories,
     isLoading: isLoadingCategories,
     error: categoriesError,
   } = useGetCategoriesQuery();
@@ -58,7 +57,7 @@ const JournalListScreen = ({ navigation }) => {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       <ButtonPrimary
         onPress={() => navigation.navigate("New Journal Entry")}
         width={"95%"}
@@ -79,6 +78,7 @@ const JournalListScreen = ({ navigation }) => {
         data={enrichedEntries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderEntryItem}
+        contentContainerStyle={{paddingBottom: 100}}
         ListEmptyComponent={() => (
           <CustomText size={15} style={{ marginTop: 30, textAlign: "center" }}>
             No journal entries found...
@@ -91,4 +91,8 @@ const JournalListScreen = ({ navigation }) => {
 
 export default JournalListScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // Le dice al View que ocupe todo el espacio vertical disponible.
+  }
+});
