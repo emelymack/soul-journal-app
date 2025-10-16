@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    borderRadius: 10,
     width: "90%",
     display: "flex",
     alignItems: "center",

@@ -10,6 +10,7 @@ export default FlatCard;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: lightTheme.background,
+    borderRadius: 10,
     padding: 16,
     margin: 16,
     elevation: 10
