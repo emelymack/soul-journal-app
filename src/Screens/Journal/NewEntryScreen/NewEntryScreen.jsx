@@ -163,9 +163,9 @@ const NewEntryScreen = ({ navigation }) => {
         name="Your thoughts"
         onChange={(text) => setEntryText(text)}
         value={entryText}
-        placeholder={`💭 Write about your day, thoughts, feelings...\n\n💜 What are you grateful for today? \n\np.s. you can use **bold** o *italics*!`}
+        placeholder={`💭 Write about your day, thoughts, feelings...\n💜 What are you grateful for today? \n\np.s. you can use Markdown format to personalize your entries!\n\nSome examples of what you can do:\n# Heading 1\n## Heading 2\n**bold**\n_italics_\n~strikethrough~`}
         multiline={true}
-        numberOfLines={12}
+        numberOfLines={14}
       />
 
       <FlatCard style={{ marginHorizontal: 0, elevation: 2 }}>
@@ -177,14 +177,6 @@ const NewEntryScreen = ({ navigation }) => {
             <Feather name="camera" size={20} color={theme.textSecondary} />
             <CustomText style={{ marginTop: 5 }}>Add Photo</CustomText>
           </Pressable>
-          {/* <Pressable style={styles.extraButton}>
-            <Ionicons
-              name="location-outline"
-              size={20}
-              color={theme.textSecondary}
-            />
-            <CustomText style={{ marginTop: 5 }}>Add Location</CustomText>
-          </Pressable> */}
         </View>
         {entryImage && (
           <Image
