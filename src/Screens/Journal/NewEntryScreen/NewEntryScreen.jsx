@@ -177,6 +177,14 @@ const NewEntryScreen = ({ navigation }) => {
             <Feather name="camera" size={20} color={theme.textSecondary} />
             <CustomText style={{ marginTop: 5 }}>Add Photo</CustomText>
           </Pressable>
+          {/* <Pressable style={styles.extraButton}>
+            <Ionicons
+              name="location-outline"
+              size={20}
+              color={theme.textSecondary}
+            />
+            <CustomText style={{ marginTop: 5 }}>Add Location</CustomText>
+          </Pressable> */}
         </View>
         {entryImage && (
           <Image
